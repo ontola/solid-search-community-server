@@ -1,4 +1,5 @@
 import {getLoggerFor, ResourceStore, ResourceIdentifier} from '@solid/community-server';
+import type { EventEmitter } from 'events';
 import fetch from 'node-fetch';
 
 /**
@@ -7,8 +8,7 @@ import fetch from 'node-fetch';
  export class SearchListener {
   private readonly logger = getLoggerFor(this);
 
-  public constructor(source: NodeJS.EventEmitter, store: ResourceStore, searchEndpoint: string) {
-    // super();
+  public constructor(source: EventEmitter, store: ResourceStore, searchEndpoint: string) {
     // Every time a resource is changed, post to the Solid-Search instance
     source.on('changed', async(changed: ResourceIdentifier): Promise<void> => {
       const turtleStream = (await store.getRepresentation(changed, { type: { 'text/turtle': 1 } })).data;

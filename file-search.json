@@ -1,5 +1,8 @@
 {
-  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^3.0.0/components/context.jsonld",
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@solid/community-server/^3.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.0/components/context.jsonld"
+  ],
   "import": [
     "files-scs:config/app/main/default.json",
     "files-scs:config/app/init/default.json",
@@ -30,18 +33,13 @@
     "files-scs:config/util/logging/winston.json",
     "files-scs:config/util/representation-conversion/default.json",
     "files-scs:config/util/resource-locker/memory.json",
-    "files-scs-search:config/search.json",
-    "files-scs:config/util/variables/default.json"
+    "files-scs:config/util/variables/default.json",
+
+    "files-solid-search:config/search.json"
   ],
   "@graph": [
     {
-      "comment": "A single-pod server that stores its resources on disk."
-    },
-    {
-      "@type": "SearchListener",
-      "eventEmitter": { "@id": "urn:solid-server:default:ResourceStore" },
-      "store": { "@id": "urn:solid-server:default:ResourceStore" },
-      "searchEndpoint": "string"
+      "comment": "A single-pod server that stores its resources on disk and supports solid search."
     }
   ]
 }

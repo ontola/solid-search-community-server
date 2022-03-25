@@ -20,8 +20,9 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "start": "community-solid-server -c file-search.json",
     "build": "npm run build:ts && npm run build:components",
-    "build:components": "componentsjs-generator -s src -c dist/components -r knows-scs",
+    "build:components": "componentsjs-generator -s src -c dist/components -i .componentsignore -r solid-search --typeScopedContexts",
     "build:ts": "tsc"
   },
   "keywords": [
@@ -35,12 +36,12 @@
   "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server",
   "lsd:components": "dist/components/components.jsonld",
   "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/components/context.jsonld": "dist/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.0/components/context.jsonld": "dist/components/context.jsonld"
   },
   "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/components/": "dist/components/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/config/": "config/",
-    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/dist/": "dist/"
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.0/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.0/config/": "config/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.0/dist/": "dist/"
   },
   "author": "Joep Meindertsma",
   "license": "MIT"
