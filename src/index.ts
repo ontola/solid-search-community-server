@@ -7,20 +7,41 @@ import fetch from 'node-fetch';
  */
  export class SearchListener {
   private readonly logger = getLoggerFor(this);
+  private readonly store: ResourceStore;
+  private readonly endpoint: string = "http://localhost:9883/search";
 
   public constructor(source: EventEmitter, store: ResourceStore, searchEndpoint: string) {
+
+    this.store = store;
+
+    if (searchEndpoint) {this.endpoint = searchEndpoint};
+
+    // NOTE: this is currently not called, something is wrong with registration / initialization of the SearchListener
+    console.log('SearchListener constructor');
+
     // Every time a resource is changed, post to the Solid-Search instance
     source.on('changed', async(changed: ResourceIdentifier): Promise<void> => {
-      const turtleStream = (await store.getRepresentation(changed, { type: { 'text/turtle': 1 } })).data;
+      this.postChanges(changed);
+    });
+  }
 
-      const response = await fetch(searchEndpoint, {
-        method: "POST",
-        body: turtleStream,
-      });
+  /** Sends the new state of the Resource to the Search back-end */
+  async postChanges(changed: ResourceIdentifier): Promise<void> {
+    console.log("Posting to search endpoint...");
 
-      if (response.status !== 200) {
-        this.logger.error(`Failed to post resource to search endpoint: ${response.status}`);
+    const turtleStream = (await this.store.getRepresentation(changed, { type: { 'text/turtle': 1 } })).data;
+
+    const response = await fetch(this.endpoint, {
+      method: "POST",
+      body: turtleStream,
+      headers: {
+        "Content-Type": "text/turtle"
       }
     });
+
+    if (response.status !== 200) {
+      this.logger.error(`Failed to post resource to search endpoint: ${response.status}`);
+    }
+    console.log("Posted, response:", response);
   }
 }

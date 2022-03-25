@@ -24,8 +24,13 @@ docker run --platform linux/amd64 -p 80:80 -p 443:443 -v atomic-storage:/atomic-
 # Make sure the community server is installed globally
 npm install -g @solid/community-server
 # Run the server using the included config
-community-solid-server -c @css:file-search.json
-
+npm run start
+# Post a resource to your solid pod
+curl -X PUT -H "Content-Type: text/turtle"  -d '<http://example.com/test> <ex:p> "testme".'  http://localhost:3000/myfile.ttl
+# Or post directly
+curl -X POST -H "Content-Type: text/turtle"  -d '<http://example.com/test> <ex:p> "testme".'   http://localhost:9883/search
+# query atomic-server
+curl -H "Accept: application/json" "http://localhost:9883/search?q=testme"
 ```
 
 ## Building locally
