@@ -1,0 +1,11 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.0/components/context.jsonld",
+  "@graph": [
+    {
+      "@type": "SearchListener",
+      "source": { "@id": "urn:solid-server:default:ResourceStore" },
+      "store": { "@id": "urn:solid-server:default:ResourceStore" },
+      "searchEndpoint": "http://example.org/my-search-endpoint"
+    }
+  ]
+}
