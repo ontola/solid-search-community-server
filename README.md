@@ -7,3 +7,16 @@ Limitations:
 
 - Only searches inside individual triples, not at resource level
 - Does not support named graphs or blank nodes
+
+## Usage
+
+```
+npm i
+npm run build
+```
+
+## Publish NPM
+
+```
+npm publish
+```

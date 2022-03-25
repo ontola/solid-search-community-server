@@ -1,6 +1,5 @@
 import {getLoggerFor, ResourceStore, ResourceIdentifier} from '@solid/community-server';
 import fetch from 'node-fetch';
-import { EventEmitter } from 'ws';
 
 /**
  * Sends turtle files to the Search indexer endpoint whenever a resource is updated, which allows for full-text search.
@@ -8,7 +7,7 @@ import { EventEmitter } from 'ws';
  export class SearchListener {
   private readonly logger = getLoggerFor(this);
 
-  public constructor(source: EventEmitter, store: ResourceStore, searchEndpoint: string) {
+  public constructor(source: NodeJS.EventEmitter, store: ResourceStore, searchEndpoint: string) {
     // super();
     // Every time a resource is changed, post to the Solid-Search instance
     source.on('changed', async(changed: ResourceIdentifier): Promise<void> => {
