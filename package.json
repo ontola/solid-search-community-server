@@ -1,0 +1,46 @@
+{
+  "devDependencies": {
+    "@solid/community-server": "^3.0.0",
+    "@tsconfig/node14": "^1.0.1",
+    "@types/node-fetch": "^2.6.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "name": "solid-search-community-server",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:joepio/solid-search-communit-server.git"
+  },
+  "description": "Extension for Community Solid Server to use full-text search, powered by Atomic-Server",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "npm run build:ts && npm run build:components",
+    "build:components": "componentsjs-generator -s src -c dist/components -i .componentsignore -r knows-scs",
+    "build:ts": "tsc"
+  },
+  "keywords": [
+    "solid",
+    "search"
+  ],
+  "files": [
+    "dist",
+    "config"
+  ],
+  "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server",
+  "lsd:components": "dist/components/components.jsonld",
+  "lsd:contexts": {
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/components/context.jsonld": "dist/components/context.jsonld"
+  },
+  "lsd:importPaths": {
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/components/": "dist/components/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/config/": "config/",
+    "https://linkedsoftwaredependencies.org/bundles/npm/solid-search-community-server/^0.0.1/dist/": "dist/"
+  },
+  "author": "Joep Meindertsma",
+  "license": "MIT"
+}
