@@ -12,6 +12,8 @@ You can do this using Docker (or a [bunch of other ways](https://github.com/joep
 Make sure you pass the `--rdf-search` flag.
 Check out more information in the [readme](https://github.com/joepio/atomic-data-rust/blob/master/server/rdf-search.md).
 
+Modify the URL of the `/search` endpoint of your search backend in the `./config/search.json` file, if it's not running on it's default of `http://0.0.0.0:9883/search`.
+
 ### Run search back-end using docker
 
 ```sh
@@ -22,32 +24,20 @@ docker run --platform linux/amd64 -p 80:80 -p 443:443 -v atomic-storage:/atomic-
 ### Run Community Solid Server with this config
 
 ```sh
-# Make sure the community server is installed globally
-npm install -g @solid/community-server
-# Run the server using the included config
+npm i
+npm run build
 npm run start
+```
+
+Usage:
+
+```sh
 # Post a resource to your solid pod
 curl -X PUT -H "Content-Type: text/turtle"  -d '<http://example.com/test> <ex:p> "testme".'  http://localhost:3000/myfile.ttl
-# Or post directly
+# Or post directly to atomic-server
 curl -X POST -H "Content-Type: text/turtle"  -d '<http://example.com/test> <ex:p> "testme".'   http://localhost:9883/search
 # query atomic-server
 curl -H "Accept: application/json" "http://localhost:9883/search?q=testme"
-```
-
-## Building locally
-
-```
-npm i
-npm run build
-```
-
-## Publish new version to NPM
-
-```sh
-# Update `package.json` version
-npm i
-npm run build
-npm publish
 ```
 
 ## Limitations
@@ -55,6 +45,10 @@ npm publish
 - Only searches inside individual triples, not at resource level
 - Does not support named graphs or blank nodes
 - No authorization / authentication included
+
+## Troubleshooting
+
+- If you're having mysterious errors, try removing local files `rm -rf ./local-files`.
 
 ## Acknowledgements
 

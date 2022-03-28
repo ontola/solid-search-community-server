@@ -3,13 +3,15 @@ import type { EventEmitter } from 'events';
 import fetch from 'node-fetch';
 import { Readable } from 'stream';
 
+const SUPPORTED_CONTENT_TYPE = "text/turtle";
+
 /**
  * Sends turtle files to the Search indexer endpoint whenever a resource is updated, which allows for full-text search.
  */
  export class SearchListener extends Initializer {
   private readonly logger = getLoggerFor(this);
   private readonly store: ResourceStore;
-  private readonly endpoint: string = "http://localhost:9883/search";
+  private readonly endpoint: string = "http://0.0.0.0:9883/search";
 
   public constructor(source: EventEmitter, store: ResourceStore, searchEndpoint: string) {
     super();
@@ -26,17 +28,14 @@ import { Readable } from 'stream';
   /** Sends the new state of the Resource to the Search back-end */
   async postChanges(changed: ResourceIdentifier): Promise<void> {
 
-    console.log("Posting to search endpoint!?...", this.endpoint, changed.path);
-
-    // These are not working right now.
-    // const representationOpts = { type: { 'text/turtle': 1 }};
 
     try {
       const repr = await this.store.getRepresentation(changed, {} );
+      if (repr.metadata.contentType !== SUPPORTED_CONTENT_TYPE) {
+        return;
+      };
       const turtleStream = repr.data;
       const reqBody = await streamToString(turtleStream);
-      console.log('reqBody', reqBody);
-
 
       const response = await fetch(this.endpoint, {
         method: "POST",
@@ -56,6 +55,7 @@ import { Readable } from 'stream';
   }
 
   public async handle(): Promise<void> {
+    // Nothing needed here, but method required implementation
   }
 }
 

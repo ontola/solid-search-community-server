@@ -6,7 +6,7 @@
       "@id": "urn:solid-server:search:SearchListener",
       "source": { "@id": "urn:solid-server:default:ResourceStore" },
       "store": { "@id": "urn:solid-server:default:ResourceStore" },
-      "searchEndpoint": "http://localhost:9883/search"
+      "searchEndpoint": "http://0.0.0.0:9883/search"
     }
   ]
 }
