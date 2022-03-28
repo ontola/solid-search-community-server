@@ -6,14 +6,16 @@ import { Readable } from 'stream';
 const SUPPORTED_CONTENT_TYPE = "text/turtle";
 
 /**
- * Sends turtle files to the Search indexer endpoint whenever a resource is updated, which allows for full-text search.
+ * Sends RDF documents to the Solid-Search (Atomic-Server) endpoint whenever a resource is updated, which allows for full-text search.
  */
  export class SearchListener extends Initializer {
   private readonly logger = getLoggerFor(this);
   private readonly store: ResourceStore;
   private readonly endpoint: string = "http://0.0.0.0:9883/search";
 
-  public constructor(source: EventEmitter, store: ResourceStore, searchEndpoint: string) {
+  public constructor(source: EventEmitter, store: ResourceStore,
+    /** Should be an Atomic-Search server URL with `/search` path */
+    searchEndpoint: string) {
     super();
     this.store = store;
 
@@ -27,13 +29,13 @@ const SUPPORTED_CONTENT_TYPE = "text/turtle";
 
   /** Sends the new state of the Resource to the Search back-end */
   async postChanges(changed: ResourceIdentifier): Promise<void> {
-
-
     try {
-      const repr = await this.store.getRepresentation(changed, {} );
+      const repr = await this.store.getRepresentation(changed, { type: { SUPPORTED_CONTENT_TYPE: 1 } } );
+
       if (repr.metadata.contentType !== SUPPORTED_CONTENT_TYPE) {
         return;
       };
+
       const turtleStream = repr.data;
       const reqBody = await streamToString(turtleStream);
 
@@ -41,12 +43,12 @@ const SUPPORTED_CONTENT_TYPE = "text/turtle";
         method: "POST",
         body: reqBody,
         headers: {
-          "Content-Type": "text/turtle"
+          "Content-Type": SUPPORTED_CONTENT_TYPE
         }
       });
 
       if (response.status !== 200) {
-        throw new Error("Solid-Search Server did not accept turtle" + response.status + "\n" +  await response.text());
+        throw new Error(`Solid-Search Server did not accept updated resource` + response.status + "\n" +  await response.text());
       }
     } catch (e) {
       this.logger.error(`Failed to post resource to search endpoint: ${e}`);
