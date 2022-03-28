@@ -59,7 +59,7 @@ npm publish
 ## Acknowledgements
 
 - Thanks to the NLNet Search & Discovery grant for making a financial contribution to this project!
-- Thanks to Joachim Van Herwegen and Ruben Verborgh for helping out with the integration with Solid-Community Server.
+- Thanks to Joachim Van Herwegen and Ruben Verborgh for [helping out](https://github.com/CommunitySolidServer/CommunitySolidServer/issues/275) with the integration with Solid-Community Server.
 - Thanks to Ruben Verborgh, Jos van den Oever and Thom van Kalkeren for helping out with the architectural design.
 - Powered by amazing Rust libraries, most notably Tantivy, Actix and Rio_turtle.
 - Written by Joep Meindertsma @joepio for Ontola.io.
