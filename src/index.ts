@@ -28,26 +28,31 @@ import { Readable } from 'stream';
 
     console.log("Posting to search endpoint!?...", this.endpoint, changed.path);
 
-    const repr = await this.store.getRepresentation(changed, { type: { 'text/turtle': 1 } });
-    const turtleStream = repr.data;
+    // These are not working right now.
+    // const representationOpts = { type: { 'text/turtle': 1 }};
+
+    try {
+      const repr = await this.store.getRepresentation(changed, {} );
+      const turtleStream = repr.data;
+      const reqBody = await streamToString(turtleStream);
+      console.log('reqBody', reqBody);
 
 
-    console.log('turtle streamie', repr.data);
-    const reqBody = await streamToString(turtleStream);
-    console.log('reqBody', reqBody);
+      const response = await fetch(this.endpoint, {
+        method: "POST",
+        body: reqBody,
+        headers: {
+          "Content-Type": "text/turtle"
+        }
+      });
 
-    const response = await fetch(this.endpoint, {
-      method: "POST",
-      body: reqBody,
-      headers: {
-        "Content-Type": "text/turtle"
+      if (response.status !== 200) {
+        throw new Error("Solid-Search Server did not accept turtle" + response.status + "\n" +  await response.text());
       }
-    });
-
-    if (response.status !== 200) {
-      this.logger.error(`Failed to post resource to search endpoint: ${response.status}`);
+    } catch (e) {
+      this.logger.error(`Failed to post resource to search endpoint: ${e}`);
     }
-    console.log("Posted, response:", await response.text());
+
   }
 
   public async handle(): Promise<void> {
