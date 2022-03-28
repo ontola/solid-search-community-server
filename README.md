@@ -34,17 +34,16 @@ Usage:
 ```sh
 # Post a resource to your solid pod
 curl -X PUT -H "Content-Type: text/turtle"  -d '<http://example.com/test> <ex:p> "testme".'  http://localhost:3000/myfile.ttl
-# Or post directly to atomic-server
-curl -X POST -H "Content-Type: text/turtle"  -d '<http://example.com/test> <ex:p> "testme".'   http://localhost:9883/search
 # query atomic-server
 curl -H "Accept: application/json" "http://localhost:9883/search?q=testme"
 ```
 
 ## Limitations
 
+- No authorization / authentication included, all resources are public. If you want to use this with private data, wrap it's `/search` query API in another project, and check ACL rights for every returned resource.
 - Only searches inside individual triples, not at resource level
+- Requires `text/turtle` serialization
 - Does not support named graphs or blank nodes
-- No authorization / authentication included
 
 ## Troubleshooting
 
