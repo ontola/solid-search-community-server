@@ -48,7 +48,7 @@ const SUPPORTED_CONTENT_TYPE = "text/turtle";
       });
 
       if (response.status !== 200) {
-        throw new Error(`Solid-Search Server did not accept updated resource` + response.status + "\n" +  await response.text());
+        throw new Error(`Solid-Search Server did not accept updated resource. Status:` + response.status + "\n" +  await response.text());
       }
     } catch (e) {
       this.logger.error(`Failed to post resource to search endpoint: ${e}`);
