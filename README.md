@@ -33,8 +33,8 @@ Usage:
 
 ```sh
 # Post a resource to your solid pod
-curl -X PUT -H "Content-Type: text/turtle"  -d '<http://example.com/test> <ex:p> "testme".'  http://localhost:3000/myfile.ttl
-# query atomic-server
+curl -X PUT -H "Content-Type: text/turtle"  -d '<http://localhost:3000/myfile.ttl> <ex:p> "testme".'  http://localhost:3000/myfile.ttl
+# query atomic-server, get the subjects of the resources that match
 curl -H "Accept: application/json" "http://localhost:9883/search?q=testme"
 ```
 
