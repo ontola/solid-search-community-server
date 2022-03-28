@@ -1,17 +1,17 @@
-import {getLoggerFor, ResourceStore, ResourceIdentifier} from '@solid/community-server';
+import {getLoggerFor, ResourceStore, ResourceIdentifier, Initializer} from '@solid/community-server';
 import type { EventEmitter } from 'events';
 import fetch from 'node-fetch';
 
 /**
  * Sends turtle files to the Search indexer endpoint whenever a resource is updated, which allows for full-text search.
  */
- export class SearchListener {
+ export class SearchListener extends Initializer {
   private readonly logger = getLoggerFor(this);
   private readonly store: ResourceStore;
   private readonly endpoint: string = "http://localhost:9883/search";
 
   public constructor(source: EventEmitter, store: ResourceStore, searchEndpoint: string) {
-
+    super();
     this.store = store;
 
     if (searchEndpoint) {this.endpoint = searchEndpoint};
@@ -43,5 +43,9 @@ import fetch from 'node-fetch';
       this.logger.error(`Failed to post resource to search endpoint: ${response.status}`);
     }
     console.log("Posted, response:", response);
+  }
+
+  public async handle(): Promise<void> {
+    console.log("SearchListener handle");
   }
 }

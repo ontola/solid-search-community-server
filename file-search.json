@@ -40,6 +40,20 @@
   "@graph": [
     {
       "comment": "A single-pod server that stores its resources on disk and supports solid search."
+    },
+    {
+      "@type": "SearchListener",
+      "@id": "urn:solid-server:search:SearchListener",
+      "source": { "@id": "urn:solid-server:default:ResourceStore" },
+      "store": { "@id": "urn:solid-server:default:ResourceStore" },
+      "searchEndpoint": "http://localhost:9883/search"
+    },
+    {
+      "@id": "urn:solid-server:default:ParallelInitializer",
+      "@type": "ParallelHandler",
+      "handlers": [
+        { "@id": "urn:solid-server:search:SearchListener" }
+      ]
     }
   ]
 }

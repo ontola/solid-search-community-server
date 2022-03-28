@@ -2,6 +2,7 @@
 
 This is an extension / plugin for the Community Solid Server.
 It adds full-text search to the Community Solid Server.
+The back-end is powered by [Atomic-Server](https://github.com/joepio/atomic-data-rust/) and [Tantivy](https://github.com/quickwit-oss/tantivy).
 
 ## Usage
 
