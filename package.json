@@ -20,7 +20,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "start": "community-solid-server -c file-search.json -f ./local-files",
+    "start": "community-solid-server -c file-search.json -f ./local-files -m .",
     "build": "npm run build:ts && npm run build:components",
     "build:components": "componentsjs-generator -s src -c dist/components -i .componentsignore -r solid-search --typeScopedContexts",
     "build:ts": "tsc"

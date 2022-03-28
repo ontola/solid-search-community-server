@@ -3,9 +3,10 @@
   "@graph": [
     {
       "@type": "SearchListener",
+      "@id": "urn:solid-server:search:SearchListener",
       "source": { "@id": "urn:solid-server:default:ResourceStore" },
       "store": { "@id": "urn:solid-server:default:ResourceStore" },
-      "searchEndpoint": "http://example.org/my-search-endpoint"
+      "searchEndpoint": "http://localhost:9883/search"
     }
   ]
 }
